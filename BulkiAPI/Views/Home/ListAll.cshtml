@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container ">
+    <br/>
+    <table class="table table-striped">
+        <caption class="h2">All routes</caption>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Source address</th>
+                <th>Destination address</th>
+                <th>Distance</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var route in Model)
+            {
+                <tr>
+                    <td>@route.Date.ToString("dd-MM-yyyy")</td>
+                    <td>@route.SourceAddress</td>
+                    <td>@route.DestinationAddress</td>
+                    <td>@route.Distance km</td>
+                    <td>@route.Price PLN</td>
+                </tr>
+             }
+        </tbody>
+
+    </table>
+</section>

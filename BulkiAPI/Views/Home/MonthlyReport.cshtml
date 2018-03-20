@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BulkiAPI.Models.MonthlyReportItem>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="container ">
+    <br />
+    <table class="table table-striped">
+        <caption class="h2">All routes</caption>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total distance</th>
+                <th>Average distance</th>
+                <th>Average price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.date</td>
+                    <td>@item.total_distance km</td>
+                    <td>@item.avg_distance km</td>
+                    <td>@item.avg_price PLN</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</section>

@@ -1,0 +1,55 @@
+﻿@model BulkiAPI.Models.Route
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.structure.css" rel="stylesheet" />
+
+<div class="container body-content">
+    <header class="help-page">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <h1>Add Route</h1>
+            </div>
+        </div>
+    </header>
+
+    @using (Html.BeginForm("AddRoute","transits",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SourceAddress, new { @class = "control-label" })
+            @Html.EditorFor(model => model.SourceAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SourceAddress, "", new { @class = "text-danger"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DestinationAddress, new { @class = "control-label" })
+            @Html.EditorFor(model => model.DestinationAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DestinationAddress, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "date-picker form-control", @id = "datepicker" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker();
+        })
+    </script>
+
+</div>

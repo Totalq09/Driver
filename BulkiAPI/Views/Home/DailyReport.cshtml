@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.structure.css" rel="stylesheet" />
+
+<div class="container body-content">
+    <header class="help-page">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <h1>Daily report</h1>
+            </div>
+        </div>
+    </header>
+
+    @using (Html.BeginForm(null, null, FormMethod.Get, new { @id = "dailyRaportForm" }))
+    {
+        <div class="form-group">
+            <label for="start_date" class="control-label">Start date:</label>
+            <input type="text" class="datepicker form-control" name="start_date" placeholder="Select date" />
+        </div>
+        <div class="form-group">
+            <label for="end_date" class="control-label">End date:</label>
+            <input type="text" class="datepicker form-control" name="end_date" placeholder="Select date"  />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Report</button>
+        </div>
+    }
+ </div>
+
+    <div id="reportContainer" class="container hidden">
+        <p class="h3 col-md-3">Total distance: <strong><span id="totalDistance"></span></strong></p>
+        <p class="h3 col-md-3">Total price: <strong><span id="totalPrice"></span></strong></p>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        })
+
+        $("#dailyRaportForm").submit(function (ev) {
+            ev.preventDefault();
+
+            $("#reportContainer").addClass("hidden");
+            $("#totalDistance").text("");
+            $("#totalPrice").text("");
+
+            $.getJSON({
+                type: "GET",
+                url: "/reports/daily",
+                data: $("#dailyRaportForm").serialize(),
+                success: function (data) {
+                    console.log(data["total_distance"]);
+                    $("#totalDistance").text(data["total_distance"]+"km");
+                    $("#totalPrice").text(data["total_price"]+"PLN");
+                    $("#reportContainer").removeClass("hidden");
+                },
+                error: function (msg) {
+                    $("#reportContainer").addClass("hidden");
+                    $("#totalDistance").text("");
+                    $("#totalPrice").text("");
+                }
+            })
+        });
+    </script>
