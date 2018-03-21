@@ -49,5 +49,25 @@ namespace BulkiAPI.Controllers
 
             return View(items);
         }
+
+        public ActionResult Remove(int id)
+        {
+            var routeObj = new RouteController().GetRoute(id);
+            if (routeObj is OkNegotiatedContentResult<string>)
+            {
+                var r = routeObj as OkNegotiatedContentResult<string>;
+                Route route = JsonConvert.DeserializeObject<Route>(r.Content);
+
+                return PartialView("RemoveRoute", route);
+            }
+
+            return View("Error", "No such route");
+        }
+
+        public ActionResult NotFound()
+        {
+            Response.StatusCode = 404;
+            return View();
+        }
     }
 }

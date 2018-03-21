@@ -36,7 +36,7 @@ namespace BulkiAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(route);
+            return Ok(JsonConvert.SerializeObject(route));
         }
 
         // POST: api/Routes
@@ -60,6 +60,21 @@ namespace BulkiAPI.Controllers
             //response.Headers.Location = new Uri(fullyQualifiedUrl);
 
             return Redirect(fullyQualifiedUrl);
+        }
+
+        // POST: api/Routes
+        [ResponseType(typeof(Route))]
+        [HttpPost]
+        [Route("modify")]
+        public IHttpActionResult Modify(Route currentRoute, Route updatedRoute)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+           
+            return Ok();
         }
 
         [ResponseType(typeof(Route))]
@@ -125,6 +140,7 @@ namespace BulkiAPI.Controllers
                 MonthlyReportItem latest = new MonthlyReportItem()
                 {
                     total_distance = 0f,
+                    total_price = 0m,
                     avg_distance = 0f,
                     avg_price = 0m
                 };
@@ -141,6 +157,7 @@ namespace BulkiAPI.Controllers
                     {
                         date = ConvertDate(time),
                         total_distance = System.Math.Round(latest.total_distance + dailyReport.total_distance, 2),
+                        total_price = latest.total_price + dailyReport.total_price,
                         avg_distance = System.Math.Round((i * latest.avg_distance + dailyReport.total_distance) / (i + 1)),
                         avg_price = System.Math.Round((i * latest.avg_price + dailyReport.total_price) / (i + 1), 2)
                     };
@@ -150,6 +167,7 @@ namespace BulkiAPI.Controllers
                     i++;
 
                     latest.total_distance = item.total_distance;
+                    latest.total_price = item.total_price;
                     latest.avg_distance = item.avg_distance;
                     latest.avg_price = item.avg_price;
 

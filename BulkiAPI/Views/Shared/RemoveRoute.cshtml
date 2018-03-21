@@ -1,0 +1,63 @@
+﻿@model BulkiAPI.Models.Route
+
+<div class="modal fade" id="modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Remove?</h2>
+                <button type="button" class="close" data-dismiss="modal" arial-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <caption><h2>Route:</h2></caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Source address</th>
+                            <th>Destination address</th>
+                            <th>Distance</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.Date.ToString("dd-MM-yyyy")</td>
+                            <td>@Model.SourceAddress</td>
+                            <td>@Model.DestinationAddress</td>
+                            <td>@Model.Distance</td>
+                            <td>@Model.Price</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
+                <button id="delete" data-url="api/Route/@Model.Id" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        $("#modal").modal();
+    })();
+    $("#delete").click(function (ev) {
+
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        $.ajax({
+            url: $(this).data('url'),
+            type: 'DELETE',
+            success: function (response) {
+                location.reload(true);
+                $("#dismiss").click();
+            },
+            error: function (response) {
+                console.log(response);
+                window.location.href = '@Url.Action("NotFound","Home")';
+            }
+        });
+    });
+</script>

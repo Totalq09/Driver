@@ -2,8 +2,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/jquery-ui.js"></script>
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.structure.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.theme.css" rel="stylesheet" />
 
 <div class="container body-content">
     <header class="help-page">
@@ -22,48 +24,48 @@
         </div>
         <div class="form-group">
             <label for="end_date" class="control-label">End date:</label>
-            <input type="text" class="datepicker form-control" name="end_date" placeholder="Select date"  />
+            <input type="text" class="datepicker form-control" name="end_date" placeholder="Select date" />
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Report</button>
         </div>
     }
- </div>
+</div>
 
-    <div id="reportContainer" class="container hidden">
-        <p class="h3 col-md-3">Total distance: <strong><span id="totalDistance"></span></strong></p>
-        <p class="h3 col-md-3">Total price: <strong><span id="totalPrice"></span></strong></p>
-    </div>
+<div id="reportContainer" class="container hidden">
+    <p class="h3 col-md-3">Total distance: <strong><span id="totalDistance"></span></strong></p>
+    <p class="h3 col-md-3">Total price: <strong><span id="totalPrice"></span></strong></p>
+</div>
 
-    <script type="text/javascript">
-        $(function () {
-            $(".datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-        })
-
-        $("#dailyRaportForm").submit(function (ev) {
-            ev.preventDefault();
-
-            $("#reportContainer").addClass("hidden");
-            $("#totalDistance").text("");
-            $("#totalPrice").text("");
-
-            $.getJSON({
-                type: "GET",
-                url: "/reports/daily",
-                data: $("#dailyRaportForm").serialize(),
-                success: function (data) {
-                    console.log(data["total_distance"]);
-                    $("#totalDistance").text(data["total_distance"]+"km");
-                    $("#totalPrice").text(data["total_price"]+"PLN");
-                    $("#reportContainer").removeClass("hidden");
-                },
-                error: function (msg) {
-                    $("#reportContainer").addClass("hidden");
-                    $("#totalDistance").text("");
-                    $("#totalPrice").text("");
-                }
-            })
+<script type="text/javascript">
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd'
         });
-    </script>
+    })
+
+    $("#dailyRaportForm").submit(function (ev) {
+        ev.preventDefault();
+
+        $("#reportContainer").addClass("hidden");
+        $("#totalDistance").text("");
+        $("#totalPrice").text("");
+
+        $.getJSON({
+            type: "GET",
+            url: "/reports/daily",
+            data: $("#dailyRaportForm").serialize(),
+            success: function (data) {
+                console.log(data["total_distance"]);
+                $("#totalDistance").text(data["total_distance"] + "km");
+                $("#totalPrice").text(data["total_price"] + "PLN");
+                $("#reportContainer").removeClass("hidden");
+            },
+            error: function (msg) {
+                $("#reportContainer").addClass("hidden");
+                $("#totalDistance").text("");
+                $("#totalPrice").text("");
+            }
+        })
+    });
+</script>

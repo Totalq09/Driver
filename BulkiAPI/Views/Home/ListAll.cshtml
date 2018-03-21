@@ -13,6 +13,7 @@
                 <th>Destination address</th>
                 <th>Distance</th>
                 <th>Price</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,9 +25,36 @@
                     <td>@route.DestinationAddress</td>
                     <td>@route.Distance km</td>
                     <td>@route.Price PLN</td>
+                    <td>
+                    <button type="button" data-url="@Url.Action("Remove", "Home", new { id = route.Id })" class="btn btn-default btn-sm" id="removeButton">
+                        Remove 
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button type="button" data-url="@Url.Action("Update", "Home", new { id = route.Id })" class="btn btn-default btn-sm" id="updateButton">
+                        Modify
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    </td>
                 </tr>
              }
         </tbody>
-
     </table>
 </section>
+
+<div id="modal" ></div>
+
+<script type="text/javascript">
+
+    $("#removeButton").click(function (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        var url = $(this).data('url');
+
+        $.get(url, function (data) {
+            $("#modal").replaceWith(data);
+        });
+
+        $("modal").removeAttr("hidden");
+    });
+</script>

@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <section class="container ">
     <br />
     <table class="table table-striped">
@@ -13,6 +12,7 @@
             <tr>
                 <th>Date</th>
                 <th>Total distance</th>
+                <th>Total price</th>
                 <th>Average distance</th>
                 <th>Average price</th>
             </tr>
@@ -23,6 +23,7 @@
                 <tr>
                     <td>@item.date</td>
                     <td>@item.total_distance km</td>
+                    <td>@item.total_price</td>
                     <td>@item.avg_distance km</td>
                     <td>@item.avg_price PLN</td>
                 </tr>

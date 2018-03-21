@@ -4,8 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/jquery-ui.js"></script>
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.structure.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.theme.css" rel="stylesheet" />
 
 <div class="container body-content">
     <header class="help-page">
@@ -16,7 +18,7 @@
         </div>
     </header>
 
-    @using (Html.BeginForm("AddRoute","transits",FormMethod.Post))
+    @using (Html.BeginForm("", "transits", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()
@@ -24,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SourceAddress, new { @class = "control-label" })
             @Html.EditorFor(model => model.SourceAddress, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SourceAddress, "", new { @class = "text-danger"})
+            @Html.ValidationMessageFor(model => model.SourceAddress, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.DestinationAddress, new { @class = "control-label" })
