@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DecimalModelBinder.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -261,6 +262,10 @@
     <Compile Include="Migrations\201803202135436_v0.1.Designer.cs">
       <DependentUpon>201803202135436_v0.1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803212227520_Modify.cs" />
+    <Compile Include="Migrations\201803212227520_Modify.Designer.cs">
+      <DependentUpon>201803212227520_Modify.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DailyReport.cs" />
     <Compile Include="Models\MonthlyReportItem.cs" />
@@ -320,6 +325,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\DriverReporter - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -352,7 +358,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -372,6 +378,9 @@
     <Content Include="Views\Home\DailyReport.cshtml" />
     <Content Include="Views\Home\MonthlyReport.cshtml" />
     <Content Include="Views\Shared\RemoveRoute.cshtml" />
+    <Content Include="Views\Shared\ModifyRoute.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Home\Todo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -397,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803202135436_v0.1.resx">
       <DependentUpon>201803202135436_v0.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803212227520_Modify.resx">
+      <DependentUpon>201803212227520_Modify.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

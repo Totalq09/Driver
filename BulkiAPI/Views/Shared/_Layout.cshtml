@@ -4,13 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/bootstrap");
 
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,11 +24,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "ListAll", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("List", "ListAll", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Add route", "AddRoute", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Daily report", "DailyReport", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Monthly report", "MonthlyReport", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Todo", "Todo", "Home", new { area = "" }, null)</li>
                 </ul>
             </div>
         </div>
@@ -38,7 +38,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP</p>
+            <p>&copy; @DateTime.Now.Year - Created by Totalq</p>
         </footer>
     </div>
 

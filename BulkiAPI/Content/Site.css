@@ -16,3 +16,6 @@ textarea {
     max-width: 280px;
 }
 
+.modal-large {
+    width: 1200px; /* respsonsive width */
+}

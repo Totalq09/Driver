@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BulkiAPI.Contexts;
@@ -50,30 +52,55 @@ namespace BulkiAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            route.Distance = 100;
             db.Routes.Add(route);
             db.SaveChanges();
 
             var response = Request.CreateResponse(HttpStatusCode.OK);
 
             string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            //response.Headers.Location = new Uri(fullyQualifiedUrl);
+            response.Headers.Location = new Uri(fullyQualifiedUrl);
 
             return Redirect(fullyQualifiedUrl);
         }
 
         // POST: api/Routes
-        [ResponseType(typeof(Route))]
+       // [ResponseType(typeof(Route))]
         [HttpPost]
         [Route("modify")]
-        public IHttpActionResult Modify(Route currentRoute, Route updatedRoute)
+        public IHttpActionResult Modify(Route updatedRoute)
         {
+            ModelState.Clear();
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-           
+            db.Routes.Where(r => r.Id == updatedRoute.Id).ToList().ForEach(r =>
+            {
+                r.Date = updatedRoute.Date; r.DestinationAddress = updatedRoute.DestinationAddress;
+                r.SourceAddress = updatedRoute.SourceAddress; r.Distance = updatedRoute.Distance; r.Price = updatedRoute.Price;
+            });
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
             return Ok();
         }
 
@@ -133,7 +160,7 @@ namespace BulkiAPI.Controllers
             try
             {
                 DateTime time = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                DateTime today = DateTime.Now;
+                DateTime endOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month));
 
                 List<MonthlyReportItem> report = new List<MonthlyReportItem>();
 
@@ -145,11 +172,11 @@ namespace BulkiAPI.Controllers
                     avg_price = 0m
                 };
 
-                IQueryable<Route> routes = db.Routes.Where(r => DateTime.Compare(r.Date, time) >= 0 && DateTime.Compare(r.Date, today) <= 0);
+                IQueryable<Route> routes = db.Routes.Where(r => DateTime.Compare(r.Date, time) >= 0 && DateTime.Compare(r.Date, endOfMonth) <= 0);
 
                 int i = 0;
 
-                while (DateTime.Compare(time,today) <= 0)
+                while (DateTime.Compare(time,endOfMonth) <= 0)
                 {
                     DailyReport dailyReport = GetDailyReport(time, time);
 

@@ -18,40 +18,110 @@
         </div>
     </header>
 
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
     @using (Html.BeginForm("", "transits", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SourceAddress, new { @class = "control-label" })
-            @Html.EditorFor(model => model.SourceAddress, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SourceAddress, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SourceAddress, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.SourceAddress, new { htmlAttributes = new { @class = "form-control", @id = "start" } })
+                    @Html.ValidationMessageFor(model => model.SourceAddress, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DestinationAddress, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DestinationAddress, new { htmlAttributes = new { @class = "form-control", @id = "end" } })
+                    @Html.ValidationMessageFor(model => model.DestinationAddress, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <button id="calculateDistance" type="button" class="btn btn-success">Calculate distance</button>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Distance, new { @class = "control-label text-muted" })
+                    @Html.EditorFor(model => model.Distance, new { htmlAttributes = new { @class = "form-control", @id = "distance", @readonly= "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Date, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+
+            <div class="col-md-9" style="height:500px">
+                <div id="map">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DestinationAddress, new { @class = "control-label" })
-            @Html.EditorFor(model => model.DestinationAddress, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DestinationAddress, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label" })
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, new { @class = "control-label" })
-            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "date-picker form-control", @id = "datepicker" } })
-            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
+       
     }
 
     <script type="text/javascript">
-        $(function () {
-            $("#datepicker").datepicker();
-        })
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: { lat: 21.01, lng: 52.22}
+            });
+
+            directionsDisplay.setMap(map);
+
+            var onChangeHandler = function () {
+                console.log($('#start').val() + " " + $('#end').val());
+
+                if ($('#start').val() == "" || $('#end').val() == "")
+                    return;
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            };
+
+            document.getElementById('calculateDistance').addEventListener('click', onChangeHandler);
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            directionsService.route({
+                origin: document.getElementById('start').value,
+                destination: document.getElementById('end').value,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+
+                    $('#distance').val(response.routes[0].legs[0].distance.value / 1000);
+                }
+                else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
     </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBGGv-ss38J8dOBNtrDlYr97Ijhen_Ht0&callback=initMap&sensor=true">
+    </script>
+
 
 </div>

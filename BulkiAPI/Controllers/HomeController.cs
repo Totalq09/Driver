@@ -64,9 +64,28 @@ namespace BulkiAPI.Controllers
             return View("Error", "No such route");
         }
 
-        public ActionResult NotFound()
+        public ActionResult Modify(int id)
+        {
+            var routeObj = new RouteController().GetRoute(id);
+            if (routeObj is OkNegotiatedContentResult<string>)
+            {
+                var r = routeObj as OkNegotiatedContentResult<string>;
+                Route route = JsonConvert.DeserializeObject<Route>(r.Content);
+
+                return PartialView("ModifyRoute", route);
+            }
+
+            return View("Error", "No such route");
+        }
+
+        public ActionResult Error()
         {
             Response.StatusCode = 404;
+            return View();
+        }
+
+        public ActionResult Todo()
+        {
             return View();
         }
     }

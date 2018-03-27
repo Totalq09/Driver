@@ -26,11 +26,11 @@
                     <td>@route.Distance km</td>
                     <td>@route.Price PLN</td>
                     <td>
-                    <button type="button" data-url="@Url.Action("Remove", "Home", new { id = route.Id })" class="btn btn-default btn-sm" id="removeButton">
+                    <button type="button" data-url="@Url.Action("Remove", "Home", new { id = route.Id })" class="actionButton btn btn-default btn-sm">
                         Remove 
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
-                    <button type="button" data-url="@Url.Action("Update", "Home", new { id = route.Id })" class="btn btn-default btn-sm" id="updateButton">
+                    <button type="button" data-url="@Url.Action("Modify", "Home", new { id = route.Id })" class="actionButton btn btn-default btn-sm">
                         Modify
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
@@ -45,14 +45,18 @@
 
 <script type="text/javascript">
 
-    $("#removeButton").click(function (ev) {
+    $(".actionButton").click(function (ev) {
         ev.stopPropagation();
         ev.preventDefault();
 
         var url = $(this).data('url');
 
-        $.get(url, function (data) {
-            $("#modal").replaceWith(data);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $("#modal").replaceWith(data);
+            },
+            async: false
         });
 
         $("modal").removeAttr("hidden");

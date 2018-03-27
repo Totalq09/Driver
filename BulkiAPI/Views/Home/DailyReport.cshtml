@@ -18,24 +18,34 @@
 
     @using (Html.BeginForm(null, null, FormMethod.Get, new { @id = "dailyRaportForm" }))
     {
-        <div class="form-group">
-            <label for="start_date" class="control-label">Start date:</label>
-            <input type="text" class="datepicker form-control" name="start_date" placeholder="Select date" />
+
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="start_date" class="control-label">Start date:</label>
+                <input type="text" class="datepicker form-control" name="start_date" placeholder="Select date" />
+            </div>
+            <div class="form-group">
+                <label for="end_date" class="control-label">End date:</label>
+                <input type="text" class="datepicker form-control" name="end_date" placeholder="Select date" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Report</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="end_date" class="control-label">End date:</label>
-            <input type="text" class="datepicker form-control" name="end_date" placeholder="Select date" />
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Report</button>
-        </div>
+        <div class="col-md-6 col-sm-6 hidden" id="reportContainer">
+            <div class="form-group">
+                <label for="totalDistance" class="control-label text-muted">Total distance:</label>
+                <input type="text" id="totalDistance" class="form-control" name="totalDistance" placeholder="" readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="totalPrice" class="control-label text-muted">Total price:</label>
+                <input type="text" id="totalPrice" name="totalPrice" class="form-control" placeholder="" readonly="readonly" />
+            </div>
+        </div>  
     }
 </div>
 
-<div id="reportContainer" class="container hidden">
-    <p class="h3 col-md-3">Total distance: <strong><span id="totalDistance"></span></strong></p>
-    <p class="h3 col-md-3">Total price: <strong><span id="totalPrice"></span></strong></p>
-</div>
+
 
 <script type="text/javascript">
     $(function () {
@@ -48,8 +58,8 @@
         ev.preventDefault();
 
         $("#reportContainer").addClass("hidden");
-        $("#totalDistance").text("");
-        $("#totalPrice").text("");
+        $("#totalDistance").val("");
+        $("#totalPrice").val("");
 
         $.getJSON({
             type: "GET",
@@ -57,14 +67,14 @@
             data: $("#dailyRaportForm").serialize(),
             success: function (data) {
                 console.log(data["total_distance"]);
-                $("#totalDistance").text(data["total_distance"] + "km");
-                $("#totalPrice").text(data["total_price"] + "PLN");
+                $("#totalDistance").val(data["total_distance"] + "km");
+                $("#totalPrice").val(data["total_price"] + "PLN");
                 $("#reportContainer").removeClass("hidden");
             },
             error: function (msg) {
                 $("#reportContainer").addClass("hidden");
-                $("#totalDistance").text("");
-                $("#totalPrice").text("");
+                $("#totalDistance").val("");
+                $("#totalPrice").val("");
             }
         })
     });
