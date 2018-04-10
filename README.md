@@ -17,5 +17,5 @@ Jesteś kierowcą ciężarówki. Codziennie wozisz świeże bułki, wędliny itd
 <p>Repozytorium nie zawiera pakietów NuGet.</p>
 
 <p align="center">
-  <img src="/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/1.PNG?raw=true" width="350"/>
+  <img src="DriverReporter/BulkiAPI/ss/1.PNG" width="350"/>
 </p>
