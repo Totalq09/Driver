@@ -17,5 +17,20 @@ Jesteś kierowcą ciężarówki. Codziennie wozisz świeże bułki, wędliny itd
 <p>Repozytorium nie zawiera pakietów NuGet.</p>
 
 <p align="center">
-  <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/1.PNG?raw=true" width="350"/>
+  <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/1.PNG?raw=true" width="850"/>
+  <br />
+    <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/2.PNG?raw=true" width="850"/>
+  <br />
+    <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/3.PNG?raw=true" width="850"/>
+  <br />
+    <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/4.PNG?raw=true" width="850"/>
+  <br />
+    <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/5.PNG?raw=true" width="850"/>
+  <br />
+    <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/6.PNG?raw=true" width="850"/>
+  <br />
+      <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/7.PNG?raw=true" width="850"/>
+  <br />
+      <img src="https://github.com/Totalq09/DriverReporter/blob/master/BulkiAPI/ss/8.PNG?raw=true" width="850"/>
+  <br />
 </p>
