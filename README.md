@@ -16,4 +16,6 @@ Jesteś kierowcą ciężarówki. Codziennie wozisz świeże bułki, wędliny itd
 <p>Projekt zrealizowano w ASP.NET MVC5. Stworzono WebApi 2 wraz z pełną strukturą MVC</p>
 <p>Repozytorium nie zawiera pakietów NuGet.</p>
 
-![Screenshot](BulkiAPI/ss/1.png)
+<p align="center">
+  <img src="BulkiAPI/ss/1.png" width="350"/>
+</p>
